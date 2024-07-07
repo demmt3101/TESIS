@@ -99,7 +99,6 @@ function editar(usu_id) {
         $('#usu_sex').val(data.usu_sex).trigger('change');
         $('#rol_id').val(data.rol_id).trigger('change');
         $('#usu_telf').val(data.usu_telf);
-        $('#usu_dni').val(data.usu_dni);
     });
     $('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');

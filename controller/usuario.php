@@ -66,7 +66,6 @@
                     $output["cur_descrip"] = $row["cur_descrip"];
                     $output["cur_fechini"] = $row["cur_fechini"];
                     $output["cur_fechfin"] = $row["cur_fechfin"];
-                    $output["cur_img"] = $row["cur_img"];
                     $output["usu_id"] = $row["usu_id"];
                     $output["usu_nom"] = $row["usu_nom"];
                     $output["usu_apep"] = $row["usu_apep"];
@@ -125,9 +124,9 @@
         /*TODO: Guardar y editar cuando se tenga el ID */
         case "guardaryeditar":
             if(empty($_POST["usu_id"])){
-                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"],$_POST["usu_dni"]);
+                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
             }else{
-                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"],$_POST["usu_dni"]);
+                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
             }
             break;
             
@@ -146,7 +145,6 @@
                     $sub_array[] = $row["usu_apep"];
                     $sub_array[] = $row["usu_apem"];
                     $sub_array[] = $row["usu_correo"];
-                    $sub_array[] = $row["usu_telf"];
                     if ($row["rol_id"]==1) {
                         $sub_array[] = "Usuario";
                     }else{
