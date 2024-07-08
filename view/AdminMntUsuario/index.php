@@ -35,8 +35,6 @@
 
             <button class="btn btn-outline-primary" id="add_button" onclick="nuevo()"><i class="fa fa-plus-square mg-r-10"></i> Nuevo Registro</button>
 
-            <button class="btn btn-outline-primary" id="btnplantilla"><i class="fa fa-gear mg-r-10"></i> Subir Plantilla</button>
-
             <p></p>
 
             <div class="table-wrapper"></div>
