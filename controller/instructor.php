@@ -34,7 +34,8 @@
             break;
         /*TODO: Eliminar segun ID */
         case "eliminar":
-            $instructor->delete_instructor($_POST["inst_id"]);
+            // Llamar a la función delete_curso del objeto Curso
+            $curso->delete_curso($_POST["cur_id"]);
             break;
         /*TODO:  Listar toda la informacion segun formato de datatable */
         case "listar":

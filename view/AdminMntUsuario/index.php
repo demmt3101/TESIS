@@ -8,7 +8,7 @@
   <head>
     <?php require_once("../html/MainHead.php"); ?>
 
-    <title>CERTIPUCE: :USUARIO</title>
+    <title>Empresa::MntUsuario</title>
   </head>
 
   <body>
@@ -35,6 +35,8 @@
 
             <button class="btn btn-outline-primary" id="add_button" onclick="nuevo()"><i class="fa fa-plus-square mg-r-10"></i> Nuevo Registro</button>
 
+            <button class="btn btn-outline-primary" id="btnplantilla"><i class="fa fa-gear mg-r-10"></i> Ingreso Masivo </button>
+
             <p></p>
 
             <div class="table-wrapper"></div>
@@ -42,10 +44,10 @@
                 <thead>
                     <tr>
                     <th class="wd-15p">Nombre</th>
-                    <th class="wd-15p">Ape.Paterno</th>
-                    <th class="wd-15p">Ape.Materno</th>
+                    <th class="wd-15p">Apellido</th>
                     <th class="wd-15p">Correo</th>
                     <th class="wd-15p">Rol</th>
+                    <th class="wd-15p">Curso</th>
                     <th class="wd-15p">Contraseña</th>
                     <th class="wd-10p"></th>
                     <th class="wd-10p"></th>

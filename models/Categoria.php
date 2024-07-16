@@ -28,19 +28,21 @@
         }
 
         /*TODO: Eliminar cambiar de estado a la categoria */
-        public function delete_categoria($cat_id){
-            $conectar= parent::conexion();
+        public function delete_categoria($cat_id) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_categoria
-                SET
-                    est = 0
-                WHERE
-                    cat_id = ?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $cat_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
+        
+            $sql = "DELETE FROM tm_categoria WHERE cat_id = ?";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $cat_id, PDO::PARAM_INT);
+        
+            if ($stmt->execute()) {
+                return true; // Retorna verdadero para indicar que la eliminación fue exitosa
+            } else {
+                return false; // Retorna falso si hubo algún problema en la eliminación
+            }
         }
+        
 
         /*TODO: Listar todas las categorias */
         public function get_categoria(){

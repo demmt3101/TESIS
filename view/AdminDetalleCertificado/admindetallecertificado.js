@@ -1,19 +1,25 @@
-
 var usu_id = $('#usu_idx').val();
 
 function init() {
+    // Mover la llamada a combo_curso aquí si es necesario inicializarlo al inicio
+    combo_curso();
+}
 
+function combo_curso() {
+    $.post("../../controller/curso.php?op=combo", function (data) {
+        $('#cur_id').html(data);
+    });
 }
 
 $(document).ready(function () {
     $('#cur_id').select2();
 
-    combo_curso();
+    combo_curso();  // Asegúrate de que la función esté definida antes de esta llamada
 
     /* Obtener Id de combo curso */
     $('#cur_id').change(function () {
         $("#cur_id option:selected").each(function () {
-            cur_id = $(this).val();
+            var cur_id = $(this).val();  // Asegúrate de declarar cur_id con var
 
             /* Listado de datatable */
             $('#detalle_data').DataTable({
@@ -87,12 +93,6 @@ function eliminar(curd_id) {
                 })
             });
         }
-    });
-}
-
-function combo_curso() {
-    $.post("../../controller/curso.php?op=combo", function (data) {
-        $('#cur_id').html(data);
     });
 }
 
@@ -175,7 +175,7 @@ function registrardetalle() {
         }
     });
 
-    if (usu_id == 0) {
+    if (usu_id.length === 0) {  // Asegúrate de verificar la longitud del array
         Swal.fire({
             title: 'Error!',
             text: 'Seleccionar Usuarios',
@@ -196,6 +196,18 @@ function registrardetalle() {
             processData: false,
             success: function (data) {
                 data = JSON.parse(data);
+
+                data.forEach(e => {
+                    e.forEach(i => {
+                        console.log(i['curd_id']);
+                        $.ajax({
+                            type: "POST",
+                            url: "../../controller/curso.php?op=generar_qr",
+                            data: { curd_id: i['curd_id'] },
+                            dataType: "json"
+                        });
+                    });
+                });
             }
         });
 
@@ -205,8 +217,8 @@ function registrardetalle() {
         $('#usuario_data').DataTable().ajax.reload();
         /* ocultar modal */
         $('#modalmantenimiento').modal('hide');
-
     }
 }
 
+// Llamar a init al final para asegurarse de que todas las funciones estén definidas
 init();

@@ -41,18 +41,20 @@
             return $resultado=$sql->fetchAll();
         }
 
-        public function delete_curso($cur_id){
-            $conectar= parent::conexion();
+        /*TODO: Eliminar curso por ID */
+        public function delete_curso($cur_id) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_curso
-                SET
-                    est = 0
-                WHERE
-                    cur_id = ?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $cur_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
+        
+            $sql = "DELETE FROM tm_curso WHERE cur_id = ?";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $cur_id, PDO::PARAM_INT);
+        
+            if ($stmt->execute()) {
+                echo "Curso eliminado correctamente.";
+            } else {
+                echo "Error al eliminar curso.";
+            }
         }
 
         public function get_curso(){
@@ -93,19 +95,25 @@
             return $resultado=$sql->fetchAll();
         }
 
-        public function delete_curso_usuario($curd_id){
-            $conectar= parent::conexion();
+        public function delete_curso_usuario($curd_id) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE td_curso_usuario
-                SET
-                    est = 0
-                WHERE
-                    curd_id = ?";
-            $sql=$conectar->prepare($sql);
+            
+            $sql = "DELETE FROM td_curso_usuario
+                    WHERE curd_id = ?";
+                    
+            $sql = $conectar->prepare($sql);
             $sql->bindValue(1, $curd_id);
             $sql->execute();
-            return $resultado=$sql->fetchAll();
+            
+            // No necesitas fetchAll() si solo estás eliminando registros
+            // Si quieres devolver algo, depende de tu lógica de negocio
+            // return $resultado = $sql->fetchAll(); 
+        
+            // Puedes retornar true si la eliminación fue exitosa, por ejemplo
+            return true;
         }
+        
 
         /*TODO: Insert Curso por Usuario */
         public function insert_curso_usuario($cur_id,$usu_id){

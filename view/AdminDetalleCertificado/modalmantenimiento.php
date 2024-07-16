@@ -12,8 +12,8 @@
                         <th><input type="checkbox" id="seleccionar_todos"> Selecciona</th> <!-- Checkbox para seleccionar todos -->
                         <th class="wd-15p">Nombre</th>
                             <th class="wd-15p">Ape.Paterno</th>
-                            <th class="wd-15p">Ape.Materno</th>
                             <th class="wd-15p">Correo</th>
+                            <th class="wd-15p">Curso</th>
                         </tr>
                     </thead>
                     <tbody>

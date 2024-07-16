@@ -8,7 +8,7 @@
   <head>
     <?php require_once("../html/MainHead.php"); ?>
 
-    <title>CERTIPUCE: :PERFIL</title>
+    <title>CERTIPUCE::Perfil</title>
   </head>
 
   <body>

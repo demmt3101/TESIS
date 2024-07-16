@@ -78,19 +78,40 @@
             break;
         /*TODO: Insetar detalle de curso usuario */
         case "insert_curso_usuario":
-            /*TODO: Array de usuario separado por comas */
-            $datos = explode(',', $_POST['usu_id']);
-            /*TODO: Registrar tantos usuarios vengan de la vista */
-            $data = Array();
-            foreach($datos as $row){
-                $sub_array = array();
-                $idx=$curso->insert_curso_usuario($_POST["cur_id"],$row);
-                $sub_array[] = $idx;
-                $data[] = $sub_array;
+            // Verificar si 'cur_id' y 'usu_id' están definidos y no son nulos
+            if (!isset($_POST['cur_id']) || empty($_POST['cur_id'])) {
+                echo json_encode(['error' => 'El ID del curso (cur_id) no está definido o está vacío.']);
+                exit;
             }
-
+            if (!isset($_POST['usu_id']) || empty($_POST['usu_id'])) {
+                echo json_encode(['error' => 'El ID de usuario (usu_id) no está definido o está vacío.']);
+                exit;
+            }
+        
+            // Array de usuario separado por comas
+            $datos = explode(',', $_POST['usu_id']);
+            
+            // Registrar tantos usuarios vengan de la vista
+            $data = array();
+            foreach ($datos as $row) {
+                // Limpieza y validación del ID de usuario
+                $row = trim($row);
+                if (!empty($row)) {
+                    try {
+                        $idx = $curso->insert_curso_usuario($_POST["cur_id"], $row);
+                        $data[] = array('idx' => $idx);
+                    } catch (PDOException $e) {
+                        // Manejo de errores de base de datos
+                        $data[] = array('error' => 'Error al insertar el usuario con ID ' . $row . ': ' . $e->getMessage());
+                    }
+                } else {
+                    $data[] = array('error' => 'ID de usuario vacío.');
+                }
+            }
+        
             echo json_encode($data);
             break;
+        
 
 
     }
