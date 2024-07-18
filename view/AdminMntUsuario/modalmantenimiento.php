@@ -43,18 +43,6 @@
                             <input class="form-control tx-uppercase" id="usu_pass" type="text" name="usu_pass" required/>
                         </div>
                     </div>
-
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label class="form-control-label">Sexo: <span class="tx-danger">*</span></label>
-                            <select class="form-control select2" style="width:100%" name="usu_sex" id="usu_sex" data-placeholder="Seleccione">
-                                <option label="Seleccione"></option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-control-label">Telefono: <span class="tx-danger">*</span></label>

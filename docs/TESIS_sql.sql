@@ -155,8 +155,8 @@ CREATE TABLE `tm_usuario` (
   `usu_sex` varchar(1) COLLATE utf8_spanish_ci NOT NULL,
   `usu_telf` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `usu_dni` int(11) DEFAULT NULL,
-  `fech_crea` datetime DEFAULT NULL,
+  `intructor` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
+  `curso` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
   `est` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -164,15 +164,16 @@ CREATE TABLE `tm_usuario` (
 -- Volcado de datos para la tabla `tm_usuario`
 --
 
-INSERT INTO `tm_usuario` (`usu_id`, `usu_nom`, `usu_apep`, `usu_apem`, `usu_correo`, `usu_pass`, `usu_sex`, `usu_telf`, `rol_id`, `usu_dni`, `fech_crea`, `est`) VALUES
-(1, 'ANDERSON', 'BASTIDAS', 'VICENTE', 'DAVIS_ANDERSON_87@HOTMAIL.COM', '123456', 'M', '989898989', 1, 1122334, '2021-04-26 20:14:08', 1),
-(2, 'DAVIS', 'CASTILLO', 'FUJIMORI', 'FUJICASTI@HOTMAIL.COM', '123456', 'M', '989898989', 1, 4445462, '2021-04-26 20:14:08', 1),
-(3, 'BULMA', 'VEGETA', 'SAYAYIN', 'GOKU@GMAIL.COM', '123456', 'F', '989898989', 1, 2233445, '2021-04-26 20:14:08', 1),
-(4, 'ADMIN', 'SISTEMA', 'SIS', 'ADMIN@ADMIN.COM', '1234567', 'M', '989898989', 2, 4445464, '2021-04-26 20:14:08', 1),
-(9, 'USU2', 'USU2', 'USU2', 'USU2@ADMIN.COM', '123456', 'M', '989898989', 1, 4445465, '2021-04-26 20:14:08', 1),
-(10, 'USU3', 'USU3', 'USU3', 'USU3@ADMIN.COM', '123456', 'M', '989898989', 1, 4445466, '2021-04-26 20:14:08', 1),
-(11, 'USU4', 'USU4', 'USU4', '4@ADMIN.COM', '123456', 'M', '989898989', 1, 4445467, '2021-04-26 20:14:08', 1),
-(12, 'USU5', 'USU5', 'USU5', '5@ADMIN.COM', '123456', 'M', '989898989', 1, 4445468, '2021-04-26 20:14:08', 1);
+INSERT INTO `tm_usuario`(`usu_id`, `usu_nom`, `usu_apep`, `usu_apem`, `usu_correo`, `usu_pass`, `usu_sex`, `usu_telf`, `rol_id`, `intructor`, `curso`, `est`) VALUES 
+(1, 'Anderson', 'Bastidas', 'Vicente', 'davis_anderson_87@hotmail.com', '123456', 'M', '989898989', 1, 'John Doe', 'Curso 1', 1),
+(2, 'Davis', 'Castillo', 'Fujimori', 'fujicasti@hotmail.com', '123456', 'M', '989898989', 1, 'Jane Smith', 'Curso 2', 1),
+(3, 'Bulma', 'Vegeta', 'Sayayin', 'goku@gmail.com', '123456', 'F', '989898989', 1, 'Carlos Pérez', 'Curso 3', 1),
+(4, 'Admin', 'Sistema', 'Sis', 'admin@admin.com', '1234567', 'M', '989898989', 2, 'Maria González', 'Curso 4', 1),
+(5, 'Usu2', 'Usu2', 'Usu2', 'usu2@admin.com', '123456', 'M', '989898989', 1, 'Juan Ramírez', 'Curso 5', 1),
+(6, 'Usu3', 'Usu3', 'Usu3', 'usu3@admin.com', '123456', 'M', '989898989', 1, 'Ana López', 'Curso 6', 1),
+(7, 'Usu4', 'Usu4', 'Usu4', '4@admin.com', '123456', 'M', '989898989', 1, 'Pedro Martínez', 'Curso 7', 1),
+(8, 'Usu5', 'Usu5', 'Usu5', '5@admin.com', '123456', 'M', '989898989', 1, 'Laura Fernández', 'Curso 8', 1);
+
 
 --
 -- Índices para tablas volcadas

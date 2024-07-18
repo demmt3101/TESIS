@@ -41,19 +41,17 @@
             return $resultado=$sql->fetchAll();
         }
 
-        public function delete_instructor($inst_id){
-            $conectar= parent::conexion();
+        public function delete_instructor($inst_id) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_instructor
-                SET
-                    est = 0
-                WHERE
-                    inst_id = ?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $inst_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
+        
+            $sql = "DELETE FROM tm_instructor WHERE inst_id = ?";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $inst_id, PDO::PARAM_INT);
+        
+            $stmt->execute();
         }
+        
 
         public function get_instructor(){
             $conectar= parent::conexion();

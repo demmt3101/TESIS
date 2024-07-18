@@ -1,8 +1,7 @@
 <?php
-  /*TODO: Llamando Cadena de Conexion */
-  require_once("config/conexion.php");
+require_once("config/conexion.php");
 
-  if(isset($_POST["register"]) and $_POST["register"]=="si"){
+if(isset($_POST["register"]) && $_POST["register"] == "si") {
     $errors = [];
 
     // Validación del nombre
@@ -28,37 +27,55 @@
         }
     } else {
         require_once("models/Usuario.php");
-        /*TODO: Inicializando Clase */
-        $usuario = new Usuario();
-        $usuario->register();
-    }
-  }
 
-  function mostrarError($mensaje) {
+        // Obtener valores del formulario
+        $usu_nom = $_POST['usu_nom'];
+        $usu_correo = $_POST['usu_correo'];
+        $usu_pass = $_POST['usu_pass'];
+        $rol_id = 1; // Asignar el rol deseado, en este caso es 1 según tus indicaciones
+
+        // Inicializar objeto Usuario y llamar a la función register
+        $usuario = new Usuario();
+        $registrado = $usuario->register($usu_nom, $usu_correo, $usu_pass, $rol_id);
+
+        if ($registrado) {
+            header("Location: index.php?m=registro_exitoso");
+            exit();
+        } else {
+            header("Location: register.php?m=error_registro");
+            exit();
+        }
+    }
+}
+
+function mostrarError($mensaje) {
     ?>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <?php echo htmlspecialchars($mensaje); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+    </div>
     <?php
-  }
+}
 
-  $mensajeError = "";
-  if (isset($_GET["m"])){
-    switch($_GET["m"]){
-      case "1":
-        $mensajeError = "Datos Incorrectos";
-        break;
-      case "2":
-        $mensajeError = "Campos vacios";
-        break;
-      case "registro_exitoso":
-        $mensajeError = "Registro exitoso";
-        break;
+$mensajeError = "";
+if (isset($_GET["m"])) {
+    switch($_GET["m"]) {
+        case "1":
+            $mensajeError = "Datos Incorrectos";
+            break;
+        case "2":
+            $mensajeError = "Campos vacíos";
+            break;
+        case "registro_exitoso":
+            $mensajeError = "Registro exitoso";
+            break;
+        case "error_registro":
+            $mensajeError = "Error al registrar usuario";
+            break;
     }
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -88,13 +105,13 @@
 </head>
 <body>
     <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v">
-        <form action="" method="post">
+        <form action="register.php" method="post">
             <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
                 <!-- Capturando mensaje de error -->
                 <?php
-                    if (!empty($mensajeError)){
-                        mostrarError($mensajeError);
-                    }
+                if (!empty($mensajeError)) {
+                    mostrarError($mensajeError);
+                }
                 ?>
 
                 <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal"></span> CERTIPUCE <span class="tx-normal"></span></div>
@@ -109,7 +126,7 @@
                 <div class="form-group">
                     <input type="password" id="usu_pass" name="usu_pass" class="form-control" placeholder="Ingrese Contraseña" required>
                 </div>
-                <input type="hidden" name="register" class="form-control" value="si">
+                <input type="hidden" name="register" value="si">
                 <button type="submit" class="btn btn-info btn-block">Registrar</button>
                 <!-- Botón de Cancelar -->
                 <a href="index.php" class="btn btn-danger btn-block">Cancelar</a>

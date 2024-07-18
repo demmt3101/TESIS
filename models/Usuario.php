@@ -51,7 +51,6 @@
                 tm_usuario.usu_nom,
                 tm_usuario.usu_apep,
                 tm_usuario.usu_apem,
-                tm_usuario.usu_dni,
                 tm_instructor.inst_id,
                 tm_instructor.inst_nom,
                 tm_instructor.inst_apep,
@@ -83,7 +82,6 @@
                 tm_usuario.usu_nom,
                 tm_usuario.usu_apep,
                 tm_usuario.usu_apem,
-                tm_usuario.usu_dni,
                 tm_instructor.inst_id,
                 tm_instructor.inst_nom,
                 tm_instructor.inst_apep,
@@ -116,7 +114,6 @@
                 tm_usuario.usu_nom,
                 tm_usuario.usu_apep,
                 tm_usuario.usu_apem,
-                tm_usuario.usu_dni,
                 tm_instructor.inst_id,
                 tm_instructor.inst_nom,
                 tm_instructor.inst_apep,
@@ -149,7 +146,6 @@
                 tm_usuario.usu_nom,
                 tm_usuario.usu_apep,
                 tm_usuario.usu_apem,
-                tm_curso.cur_img,
                 tm_instructor.inst_id,
                 tm_instructor.inst_nom,
                 tm_instructor.inst_apep,
@@ -215,10 +211,10 @@
         }
 
         /*TODO: Funcion para insertar usuario */
-        public function insert_usuario($usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id,$usu_dni){
+        public function insert_usuario($usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id,){
             $conectar= parent::conexion();
             parent::set_names();
-            $sql="INSERT INTO tm_usuario (usu_id,usu_nom,usu_apep,usu_apem,usu_correo,usu_pass,usu_sex,usu_telf,rol_id,usu_dni,fech_crea, est) VALUES (NULL,?,?,?,?,?,?,?,?,?,now(),'1');";
+            $sql="INSERT INTO tm_usuario (usu_id,usu_nom,usu_apep,usu_apem,usu_correo,usu_pass,usu_sex,usu_telf,rol_id,fech_crea, est) VALUES (NULL,?,?,?,?,?,?,?,?,?,now(),'1');";
             $sql=$conectar->prepare($sql);
             $sql->bindValue(1, $usu_nom);
             $sql->bindValue(2, $usu_apep);
@@ -228,13 +224,12 @@
             $sql->bindValue(6, $usu_sex);
             $sql->bindValue(7, $usu_telf);
             $sql->bindValue(8, $rol_id);
-            $sql->bindValue(9, $usu_dni);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
 
         /*TODO: Funcion para actualizar usuario */
-        public function update_usuario($usu_id,$usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id,$usu_dni){
+        public function update_usuario($usu_id,$usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id){
             $conectar= parent::conexion();
             parent::set_names();
             $sql="UPDATE tm_usuario
@@ -247,7 +242,6 @@
                     usu_sex = ?,
                     usu_telf = ?,
                     rol_id = ?,
-                    usu_dni = ?
                 WHERE
                     usu_id = ?";
             $sql=$conectar->prepare($sql);
@@ -259,26 +253,22 @@
             $sql->bindValue(6, $usu_sex);
             $sql->bindValue(7, $usu_telf);
             $sql->bindValue(8, $rol_id);
-            $sql->bindValue(9, $usu_dni);
             $sql->bindValue(10, $usu_id);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
 
-        /*TODO: Eliminar cambiar de estado a la categoria */
-        public function delete_usuario($usu_id){
-            $conectar= parent::conexion();
+        public function delete_usuario($usu_id) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_usuario
-                SET
-                    est = 0
-                WHERE
-                    usu_id = ?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
+            
+            $sql = "DELETE FROM tm_usuario WHERE usu_id = ?";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $usu_id, PDO::PARAM_INT);
+            
+            $stmt->execute();
         }
+      
 
         /*TODO: Listar todas las categorias */
         public function get_usuario(){
@@ -303,8 +293,77 @@
             return $resultado=$sql->fetchAll();
         }
 
-
+        
+        public function get_usuario_por_correo($usu_correo) {
+            $conectar = parent::conexion();
+            parent::set_names();
+            
+            $sql = "SELECT * FROM tm_usuario WHERE usu_correo = ?";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $usu_correo);
+            $stmt->execute();
+            
+            return $stmt->fetchAll();
         }
-
     
+        public function generate_numeric_password($length = 6) {
+            return substr(str_shuffle("0123456789"), 0, $length);
+        }
+    
+        public function register_masive($usu_nom, $usu_correo, $curso, $usu_pass) {
+            $conectar = parent::conexion();
+            parent::set_names();
+            
+            try {
+                $conectar->beginTransaction();
+                
+                // Check if the user email is already registered
+                $sql_check = "SELECT * FROM tm_usuario WHERE usu_correo = ?";
+                $stmt_check = $conectar->prepare($sql_check);
+                $stmt_check->bindValue(1, $usu_correo);
+                $stmt_check->execute();
+                
+                if ($stmt_check->rowCount() > 0) {
+                    $conectar->rollBack();
+                    return "Correo ya registrado";
+                }
+                
+                $sql = "INSERT INTO tm_usuario (usu_nom, usu_correo, curso, usu_pass, rol_id, est) VALUES (?, ?, ?, ?, 1, 1)";
+                $stmt = $conectar->prepare($sql);
+                $stmt->bindValue(1, $usu_nom);
+                $stmt->bindValue(2, $usu_correo);
+                $stmt->bindValue(3, $curso);
+                $stmt->bindValue(4, $usu_pass);
+                
+                if ($stmt->execute()) {
+                    $conectar->commit();
+                    return true;
+                } else {
+                    $conectar->rollBack();
+                    return false;
+                }
+            } catch (Exception $e) {
+                $conectar->rollBack();
+                return false;
+            }
+        }
+    
+        // New function to validate email format
+        public function validate_email_format($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        }
+    
+        public function register($usu_nom, $usu_correo, $usu_pass) {
+            $conectar = parent::conexion();
+            parent::set_names();
+            
+            $sql = "INSERT INTO tm_usuario (usu_nom, usu_correo, usu_pass, rol_id, est) VALUES (?, ?, ?, 1, 1)";
+            $stmt = $conectar->prepare($sql);
+            $stmt->bindValue(1, $usu_nom);
+            $stmt->bindValue(2, $usu_correo);
+            $stmt->bindValue(3, $usu_pass);
+            
+            return $stmt->execute();
+        }
+}
 ?>

@@ -44,6 +44,7 @@
     <div class="ht-100v d-flex align-items-center justify-content-center">
       <div class="wd-lg-70p wd-xl-50p tx-center pd-x-40">
         <h1 class="tx-100 tx-xs-140 tx-normal tx-inverse tx-roboto mg-b-0">Consulta</h1>
+        <h5 class="tx-xs-24 tx-normal tx-info mg-b-30 lh-5">Ingrese DNI para Validar Certificados</h5>
 
         <div class="d-flex justify-content-center">
           <div class="input-group wd-xs-300">
