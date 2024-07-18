@@ -1,5 +1,5 @@
 <?php
-    class Curso extends Conectar{
+class Curso extends Conectar {
 
         public function insert_curso($cat_id,$cur_nom,$cur_descrip,$cur_fechini,$cur_fechfin,$inst_id){
             $conectar= parent::conexion();
