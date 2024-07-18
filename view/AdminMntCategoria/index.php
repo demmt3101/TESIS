@@ -8,7 +8,7 @@
   <head>
     <?php require_once("../html/MainHead.php"); ?>
 
-    <title>CERIPUCE: :CATEGORIA</title>
+    <title>CERTIPUCE: :CATEGORIA</title>
   </head>
 
   <body>

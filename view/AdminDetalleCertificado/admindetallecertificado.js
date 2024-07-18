@@ -30,6 +30,7 @@ $(document).ready(function () {
                     'copyHtml5',
                     'excelHtml5',
                     'csvHtml5',
+                    'zipHtml5',
                 ],
                 "ajax": {
                     url: "../../controller/usuario.php?op=listar_cursos_usuario",
@@ -93,6 +94,12 @@ function eliminar(curd_id) {
                 })
             });
         }
+    });
+}
+
+function combo_curso() {
+    $.post("../../controller/curso.php?op=combo", function (data) {
+        $('#cur_id').html(data);
     });
 }
 

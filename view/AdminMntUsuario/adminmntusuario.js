@@ -74,14 +74,19 @@ $(document).ready(function () {
 
 function editar(usu_id) {
     $.post("../../controller/usuario.php?op=mostrar", { usu_id: usu_id }, function (data) {
+        console.log(data);
         data = JSON.parse(data);
         $('#usu_id').val(data.usu_id);
         $('#usu_nom').val(data.usu_nom);
+        $('#usu_apep').val(data.usu_apep);
+        $('#usu_apem').val(data.usu_apem);
         $('#usu_correo').val(data.usu_correo);
+        $('#usu_pass').val(data.usu_pass);
+        $('#usu_sex').val(data.usu_sex).trigger('change');
         $('#rol_id').val(data.rol_id).trigger('change');
+        $('#usu_telf').val(data.usu_telf);
     });
-
-    $('#lbltitulo').html('Editar Usuario');
+    $('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
 }
 
@@ -164,6 +169,64 @@ $(document).ready(function () {
     });
 });
 
+var ExcelToJSON = function () {
+    this.parseExcel = function (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            //TODO: Recorrido a todas las pestañas
+            workbook.SheetNames.forEach(function (sheetName) {
+                // Here is your object
+                var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                var json_object = JSON.stringify(XL_row_object);
+                UserList = JSON.parse(json_object);
+
+                console.log(UserList)
+                for (i = 0; i < UserList.length; i++) {
+
+                    var columns = Object.values(UserList[i])
+
+                    $.post("../../controller/usuario.php?op=guardar_desde_excel", {
+                        usu_nom: columns[0],
+                        usu_apep: columns[1],
+                        usu_apem: columns[2],
+                        usu_correo: columns[3],
+                        usu_pass: columns[4],
+                        usu_sex: columns[5],
+                        usu_telf: columns[6],
+                        rol_id: columns[7],
+                    }, function (data) {
+                        console.log(data);
+                    });
+
+                }
+                /* TODO:Despues de subir la informacion limpiar inputfile */
+                document.getElementById("upload").value = null;
+
+                /* TODO: Actualizar Datatable JS */
+                $('#usuario_data').DataTable().ajax.reload();
+                $('#modalplantilla').modal('hide');
+            })
+        };
+        reader.onerror = function (ex) {
+            console.log(ex);
+        };
+
+        reader.readAsBinaryString(file);
+    };
+};
+
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+    var xl2json = new ExcelToJSON();
+    xl2json.parseExcel(files[0]);
+}
+
+document.getElementById('upload').addEventListener('change', handleFileSelect, false);
 
 
 
