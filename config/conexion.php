@@ -30,8 +30,7 @@
         public static function ruta(){
             //QA
             return "http://localhost:90/TESIS/";
-            //Produccion
-            //return "http://diplomas.anderson-bastidas.com/";
+            
         }
 
     }

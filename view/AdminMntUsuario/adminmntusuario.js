@@ -6,7 +6,7 @@ function init() {
     });
 }
 
-function guardaryeditar(e) {
+function guardaryeditar(e){
     e.preventDefault();
     var formData = new FormData($("#usuario_form")[0]);
     $.ajax({
@@ -15,13 +15,14 @@ function guardaryeditar(e) {
         data: formData,
         contentType: false,
         processData: false,
-        success: function (data) {
+        success: function(data){
+
             $('#usuario_data').DataTable().ajax.reload();
             $('#modalmantenimiento').modal('hide');
 
             Swal.fire({
                 title: 'Correcto!',
-                text: 'Se Registró Correctamente',
+                text: 'Se Registro Correctamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
             })

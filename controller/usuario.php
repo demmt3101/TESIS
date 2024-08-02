@@ -10,30 +10,29 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 $usuario = new Usuario();
 
 // Verificar si 'op' está definido en $_GET
-if (isset($_GET["op"])) {
-    switch ($_GET["op"]) {
+switch ($_GET["op"]) {
 
         /* TODO: MicroServicio para poder mostrar el listado de cursos de un usuario con certificado */
         case "listar_cursos":
-            $datos = $usuario->get_cursos_x_usuario($_POST["usu_id"]);
-            $data = array();
-            foreach ($datos as $row) {
-                $sub_array = array(
-                    $row["cur_nom"],
-                    $row["cur_fechini"],
-                    $row["cur_fechfin"],
-                    $row["inst_nom"] . " " . $row["inst_apep"],
-                    '<button type="button" onClick="certificado(' . $row["curd_id"] . ');" id="' . $row["curd_id"] . '" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-id-card-o"></i></div></button>'
-                );
+            $datos=$usuario->get_cursos_x_usuario($_POST["usu_id"]);
+            $data= Array();
+            foreach($datos as $row){
+                $sub_array = array();
+                $sub_array[] = $row["cur_nom"];
+                $sub_array[] = $row["cur_fechini"];
+                $sub_array[] = $row["cur_fechfin"];
+                $sub_array[] = $row["inst_nom"]." ".$row["inst_apep"];
+                $sub_array[] = '<button type="button" onClick="certificado('.$row["curd_id"].');"  id="'.$row["curd_id"].'" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-id-card-o"></i></div></button>';
                 $data[] = $sub_array;
             }
+
             $results = array(
-                "sEcho" => 1,
-                "iTotalRecords" => count($data),
-                "iTotalDisplayRecords" => count($data),
-                "aaData" => $data
-            );
+                "sEcho"=>1,
+                "iTotalRecords"=>count($data),
+                "iTotalDisplayRecords"=>count($data),
+                "aaData"=>$data);
             echo json_encode($results);
+
             break;
 
         /* TODO: MicroServicio para poder mostrar el listado de los top 10 cursos de un usuario */
@@ -111,7 +110,6 @@ if (isset($_GET["op"])) {
                     $output["usu_pass"] = $row["usu_pass"];
                     $output["usu_telf"] = $row["usu_telf"];
                     $output["rol_id"] = $row["rol_id"];
-                    $output["usu_dni"] = $row["usu_dni"];
                 }
                 echo json_encode($output);
             }
@@ -133,11 +131,12 @@ if (isset($_GET["op"])) {
         /* TODO: Guardar y editar cuando se tenga el ID */
         case "guardaryeditar":
             if(empty($_POST["usu_id"])){
-                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"],$_POST["usu_dni"]);
+                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
             }else{
-                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"],$_POST["usu_dni"]);
+                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
             }
             break;
+        
 
         /* TODO: Eliminar segun ID */
         case "eliminar":
@@ -146,27 +145,30 @@ if (isset($_GET["op"])) {
 
         /* TODO: Listar toda la informacion segun formato de datatable */
         case "listar":
-            $datos = $usuario->get_usuario();
-            $data = array();
-            foreach ($datos as $row) {
-                $sub_array = array(
-                    $row["usu_nom"],
-                    $row["usu_apep"],
-                    $row["usu_correo"],
-                    ($row["rol_id"] == 1) ? "Usuario" : "Admin",
-                    $row["curso"],
-                    $row["usu_pass"],
-                    '<button type="button" onClick="editar(' . $row["usu_id"] . ');"  id="' . $row["usu_id"] . '" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-edit"></i></div></button>',
-                    '<button type="button" onClick="eliminar(' . $row["usu_id"] . ');"  id="' . $row["usu_id"] . '" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-close"></i></div></button>'
-                );
+            $datos=$usuario->get_usuario();
+            $data= Array();
+            foreach($datos as $row){
+                $sub_array = array();
+                $sub_array[] = $row["usu_nom"];
+                $sub_array[] = $row["usu_apep"];
+                $sub_array[] = $row["usu_correo"];
+                $sub_array[] = $row["curso"];
+                $sub_array[] = $row["usu_pass"];
+                if ($row["rol_id"]==1) {
+                    $sub_array[] = "Usuario";
+                }else{
+                    $sub_array[] = "Admin";
+                }
+                $sub_array[] = '<button type="button" onClick="editar('.$row["usu_id"].');"  id="'.$row["usu_id"].'" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-edit"></i></div></button>';
+                $sub_array[] = '<button type="button" onClick="eliminar('.$row["usu_id"].');"  id="'.$row["usu_id"].'" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-close"></i></div></button>';
                 $data[] = $sub_array;
             }
+
             $results = array(
-                "sEcho" => 1,
-                "iTotalRecords" => count($data),
-                "iTotalDisplayRecords" => count($data),
-                "aaData" => $data
-            );
+                "sEcho"=>1,
+                "iTotalRecords"=>count($data),
+                "iTotalDisplayRecords"=>count($data),
+                "aaData"=>$data);
             echo json_encode($results);
             break;
 
@@ -265,9 +267,10 @@ if (isset($_GET["op"])) {
             }
             break;
 
-            case "guardar_desde_excel":
-                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
-                break;
-    }      
-}  
+        case "guardar_desde_excel":
+            $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
+            break;
+            
+        }
+        
 ?>

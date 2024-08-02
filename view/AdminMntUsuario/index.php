@@ -8,7 +8,7 @@
   <head>
     <?php require_once("../html/MainHead.php"); ?>
 
-    <title>Empresa::MntUsuario</title>
+    <title>CERTIPUCE::MntUsuario</title>
   </head>
 
   <body>
@@ -46,9 +46,9 @@
                     <th class="wd-15p">Nombre</th>
                     <th class="wd-15p">Apellido</th>
                     <th class="wd-15p">Correo</th>
-                    <th class="wd-15p">Rol</th>
                     <th class="wd-15p">Curso</th>
                     <th class="wd-15p">Contraseña</th>
+                    <th class="wd-15p">Rol</th>
                     <th class="wd-10p"></th>
                     <th class="wd-10p"></th>
                     </tr>
