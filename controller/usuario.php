@@ -130,22 +130,12 @@ switch ($_GET["op"]) {
         /* TODO: Guardar y editar cuando se tenga el ID */
         case "guardaryeditar":
             if(empty($_POST["usu_id"])){
-<<<<<<< Updated upstream
-                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
-            }else{
-                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
-            }
-            break;
-        
-
-=======
                 $usuario->insert_usuario($_POST["usu_nom"], $_POST["usu_apep"], $_POST["usu_apem"], $_POST["usu_correo"], $_POST["usu_pass"], $_POST["usu_telf"], $_POST["rol_id"]);
             } else {
                 $usuario->update_usuario($_POST["usu_id"], $_POST["usu_nom"], $_POST["usu_apep"], $_POST["usu_apem"], $_POST["usu_correo"], $_POST["usu_pass"], $_POST["usu_telf"], $_POST["rol_id"]);
             }
             break;                
-        
->>>>>>> Stashed changes
+
         /* TODO: Eliminar segun ID */
         case "eliminar":
             $usuario->delete_usuario($_POST["usu_id"]);

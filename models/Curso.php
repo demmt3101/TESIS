@@ -4,13 +4,8 @@ class Curso extends Conectar {
     public function insert_curso($cat_id,$cur_nom,$cur_descrip,$cur_fechini,$cur_fechfin,$inst_id){
         $conectar= parent::conexion();
         parent::set_names();
-<<<<<<< Updated upstream
-        $sql="INSERT INTO tm_curso (cur_id, cat_id, cur_nom, cur_descrip, cur_fechini, cur_fechfin, inst_id,cur_img, fech_crea, est) VALUES (NULL,?,?,?,?,?,?,'../../public/1.png', now(),'1');";
-        $sql=$conectar->prepare($sql);
-=======
         $sql = "INSERT INTO tm_curso (cur_id, cat_id, cur_nom, cur_descrip, cur_fechini, cur_fechfin, inst_id, cur_img, fech_crea, est) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, now(), '1');";
         $sql = $conectar->prepare($sql);
->>>>>>> Stashed changes
         $sql->bindValue(1, $cat_id);
         $sql->bindValue(2, $cur_nom);
         $sql->bindValue(3, $cur_descrip);
@@ -18,13 +13,8 @@ class Curso extends Conectar {
         $sql->bindValue(5, $cur_fechfin);
         $sql->bindValue(6, $inst_id);
         $sql->execute();
-<<<<<<< Updated upstream
-        return $resultado=$sql->fetchAll();
-    }
-=======
         // No se necesita fetchAll() aquí
     }    
->>>>>>> Stashed changes
 
     public function update_curso($cur_id,$cat_id,$cur_nom,$cur_descrip,$cur_fechini,$cur_fechfin,$inst_id){
             $conectar= parent::conexion();
