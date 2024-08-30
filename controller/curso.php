@@ -36,12 +36,14 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar segun ID */
     case "eliminar":
-        if (isset($_POST["cur_id"])) {
-            $curso->delete_curso($_POST["cur_id"]);
+        if (isset($_POST["cur_id"]) && is_numeric($_POST["cur_id"])) {
+            $cur_id = intval($_POST["cur_id"]); // Asegúrate de que sea un entero
+            $curso->delete_curso($cur_id);
         } else {
-            echo json_encode(["error" => "cur_id no definido"]);
+            echo json_encode(["error" => "cur_id no definido o no válido"]);
         }
         break;
+    
 
     /*TODO:  Listar toda la informacion segun formato de datatable */
     case "listar":
@@ -101,6 +103,7 @@ switch ($_GET["op"]) {
         break;
 
     case "update_imagen_curso":
+<<<<<<< Updated upstream
         // Agregar depuración para ver el contenido de $_POST y $_FILES
         error_log(print_r($_POST, true));
         error_log(print_r($_FILES, true));
@@ -127,4 +130,10 @@ switch ($_GET["op"]) {
     }
         
         
+=======
+        $curso->update_imagen_curso($_POST["curx_idx"],$_POST["cur_img"]);
+        break;
+        
+}
+>>>>>>> Stashed changes
 ?>

@@ -1,11 +1,19 @@
 
 var usu_id = $('#usu_idx').val();
 
+<<<<<<< Updated upstream
 function init(){
 
 }
 
 $(document).ready(function(){
+=======
+function init() {
+
+}
+
+$(document).ready(function () {
+>>>>>>> Stashed changes
     $('#cur_id').select2();
 
     combo_curso();
@@ -175,7 +183,11 @@ function registrardetalle(){
         }
     });
 
+<<<<<<< Updated upstream
     if (usu_id == 0){
+=======
+    if (usu_id == 0) {
+>>>>>>> Stashed changes
         Swal.fire({
             title: 'Error!',
             text: 'Seleccionar Usuarios',
@@ -200,12 +212,15 @@ function registrardetalle(){
                 data.forEach(e => {
                     e.forEach(i => {
                         console.log(i['curd_id']);
+<<<<<<< Updated upstream
                         $.ajax({
                             type: "POST",
                             url: "../../controller/curso.php?op=generar_qr",
                             data: {curd_id : i['curd_id']},
                             dataType: "json"
                         });
+=======
+>>>>>>> Stashed changes
                     });
                 });
             }

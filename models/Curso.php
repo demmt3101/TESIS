@@ -4,8 +4,13 @@ class Curso extends Conectar {
     public function insert_curso($cat_id,$cur_nom,$cur_descrip,$cur_fechini,$cur_fechfin,$inst_id){
         $conectar= parent::conexion();
         parent::set_names();
+<<<<<<< Updated upstream
         $sql="INSERT INTO tm_curso (cur_id, cat_id, cur_nom, cur_descrip, cur_fechini, cur_fechfin, inst_id,cur_img, fech_crea, est) VALUES (NULL,?,?,?,?,?,?,'../../public/1.png', now(),'1');";
         $sql=$conectar->prepare($sql);
+=======
+        $sql = "INSERT INTO tm_curso (cur_id, cat_id, cur_nom, cur_descrip, cur_fechini, cur_fechfin, inst_id, cur_img, fech_crea, est) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, now(), '1');";
+        $sql = $conectar->prepare($sql);
+>>>>>>> Stashed changes
         $sql->bindValue(1, $cat_id);
         $sql->bindValue(2, $cur_nom);
         $sql->bindValue(3, $cur_descrip);
@@ -13,8 +18,13 @@ class Curso extends Conectar {
         $sql->bindValue(5, $cur_fechfin);
         $sql->bindValue(6, $inst_id);
         $sql->execute();
+<<<<<<< Updated upstream
         return $resultado=$sql->fetchAll();
     }
+=======
+        // No se necesita fetchAll() aquí
+    }    
+>>>>>>> Stashed changes
 
     public function update_curso($cur_id,$cat_id,$cur_nom,$cur_descrip,$cur_fechini,$cur_fechfin,$inst_id){
             $conectar= parent::conexion();
@@ -54,6 +64,7 @@ class Curso extends Conectar {
             echo "Error al eliminar curso.";
         }
     }
+    
 
     public function get_curso() {
         $conectar = parent::conexion();
@@ -141,14 +152,14 @@ class Curso extends Conectar {
         $sql->execute();
         return $resultado=$sql->fetchAll();
     }
-
-    public function upload_file() {
-        if (isset($_FILES["cur_img"])) {
+    
+    public function upload_file(){
+        if(isset($_FILES["cur_img"])){
             $extension = explode('.', $_FILES['cur_img']['name']);
             $new_name = rand() . '.' . $extension[1];
             $destination = '../public/' . $new_name;
             move_uploaded_file($_FILES['cur_img']['tmp_name'], $destination);
-            return "../../public/" . $new_name;
+            return "../../public/".$new_name;
         }
     }
 }

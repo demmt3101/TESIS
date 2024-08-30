@@ -132,8 +132,9 @@
 
         /*TODO: Mostrar todos los datos de un curso por su id de detalle */
         public function get_curso_x_id_detalle($curd_id){
-            $conectar= parent::conexion();
+            $conectar = parent::conexion();
             parent::set_names();
+<<<<<<< Updated upstream
             $sql="SELECT 
                 td_curso_usuario.curd_id,
                 tm_curso.cur_id,
@@ -157,10 +158,35 @@
                 WHERE 
                 td_curso_usuario.curd_id = ?";
             $sql=$conectar->prepare($sql);
+=======
+            $sql = "SELECT 
+                        td_curso_usuario.curd_id,
+                        tm_curso.cur_id,
+                        tm_curso.cur_nom,
+                        tm_curso.cur_descrip,
+                        tm_curso.cur_fechini,
+                        tm_curso.cur_fechfin,
+                        tm_curso.cur_img,       -- Incluye el campo cur_img aquí
+                        tm_usuario.usu_id,
+                        tm_usuario.usu_nom,
+                        tm_usuario.usu_apep,
+                        tm_usuario.usu_apem,
+                        tm_instructor.inst_id,
+                        tm_instructor.inst_nom,
+                        tm_instructor.inst_apep,
+                        tm_instructor.inst_apem
+                    FROM td_curso_usuario 
+                    INNER JOIN tm_curso ON td_curso_usuario.cur_id = tm_curso.cur_id 
+                    INNER JOIN tm_usuario ON td_curso_usuario.usu_id = tm_usuario.usu_id 
+                    INNER JOIN tm_instructor ON tm_curso.inst_id = tm_instructor.inst_id
+                    WHERE td_curso_usuario.curd_id = ?";
+            $sql = $conectar->prepare($sql);
+>>>>>>> Stashed changes
             $sql->bindValue(1, $curd_id);
             $sql->execute();
-            return $resultado=$sql->fetchAll();
+            return $sql->fetchAll();
         }
+        
 
         /*TODO: Cantidad de Cursos por Usuario */
         public function get_total_cursos_x_usuario($usu_id){
@@ -185,79 +211,84 @@
         }
 
         /*TODO: Actualizar la informacion del perfil del usuario segun ID */
-        public function update_usuario_perfil($usu_id,$usu_nom,$usu_apep,$usu_apem,$usu_pass,$usu_sex,$usu_telf){
-            $conectar= parent::conexion();
+        public function update_usuario_perfil($usu_id, $usu_nom, $usu_apep, $usu_apem, $usu_pass, $usu_telf) {
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_usuario 
-                SET
-                    usu_nom = ?,
-                    usu_apep = ?,
-                    usu_apem = ?,
-                    usu_pass = ?,
-                    usu_sex = ?,
-                    usu_telf = ?
-                WHERE
-                    usu_id = ?";
-            $sql=$conectar->prepare($sql);
+            $sql = "UPDATE tm_usuario 
+                    SET
+                        usu_nom = ?,
+                        usu_apep = ?,
+                        usu_apem = ?,
+                        usu_pass = ?,
+                        usu_telf = ?
+                    WHERE
+                        usu_id = ?";
+            $sql = $conectar->prepare($sql);
             $sql->bindValue(1, $usu_nom);
             $sql->bindValue(2, $usu_apep);
             $sql->bindValue(3, $usu_apem);
             $sql->bindValue(4, $usu_pass);
-            $sql->bindValue(5, $usu_sex);
-            $sql->bindValue(6, $usu_telf);
-            $sql->bindValue(7, $usu_id);
+            $sql->bindValue(5, $usu_telf);
+            $sql->bindValue(6, $usu_id);
             $sql->execute();
-            return $resultado=$sql->fetchAll();
+            return $sql->fetchAll();
         }
+        
 
         /*TODO: Funcion para insertar usuario */
+<<<<<<< Updated upstream
         public function insert_usuario($usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id){
             $conectar= parent::conexion();
+=======
+        public function insert_usuario($usu_nom, $usu_apep, $usu_apem, $usu_correo, $usu_pass, $usu_telf, $rol_id){
+            $conectar = parent::conexion();
+>>>>>>> Stashed changes
             parent::set_names();
-            $sql="INSERT INTO tm_usuario (usu_id,usu_nom,usu_apep,usu_apem,usu_correo,usu_pass,usu_sex,usu_telf,rol_id,fech_crea, est) VALUES (NULL,?,?,?,?,?,?,?,?,?,now(),'1');";
-            $sql=$conectar->prepare($sql);
+            $sql = "INSERT INTO tm_usuario (usu_id, usu_nom, usu_apep, usu_apem, usu_correo, usu_pass, usu_telf, rol_id, fech_crea, est) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, now(), '1');";
+            $sql = $conectar->prepare($sql);
             $sql->bindValue(1, $usu_nom);
             $sql->bindValue(2, $usu_apep);
             $sql->bindValue(3, $usu_apem);
             $sql->bindValue(4, $usu_correo);
             $sql->bindValue(5, $usu_pass);
-            $sql->bindValue(6, $usu_sex);
-            $sql->bindValue(7, $usu_telf);
-            $sql->bindValue(8, $rol_id);
+            $sql->bindValue(6, $usu_telf);
+            $sql->bindValue(7, $rol_id);
             $sql->execute();
+<<<<<<< Updated upstream
             return $resultado=$sql->fetchAll();
         }
     
+=======
+            return $resultado = $sql->fetchAll();
+        }               
+                       
+>>>>>>> Stashed changes
 
         /*TODO: Funcion para actualizar usuario */
-        public function update_usuario($usu_id,$usu_nom,$usu_apep,$usu_apem,$usu_correo,$usu_pass,$usu_sex,$usu_telf,$rol_id){
-            $conectar= parent::conexion();
+        public function update_usuario($usu_id, $usu_nom, $usu_apep, $usu_apem, $usu_correo, $usu_pass, $usu_telf, $rol_id){
+            $conectar = parent::conexion();
             parent::set_names();
-            $sql="UPDATE tm_usuario
-                SET
-                    usu_nom = ?,
-                    usu_apep = ?,
-                    usu_apem = ?,
-                    usu_correo = ?,
-                    usu_pass = ?,
-                    usu_sex = ?,
-                    usu_telf = ?,
-                    rol_id = ?,
-                WHERE
-                    usu_id = ?";
-            $sql=$conectar->prepare($sql);
+            $sql = "UPDATE tm_usuario SET usu_nom=?, usu_apep=?, usu_apem=?, usu_correo=?, usu_pass=?, usu_telf=?, rol_id=? WHERE usu_id=?";
+            $sql = $conectar->prepare($sql);
             $sql->bindValue(1, $usu_nom);
             $sql->bindValue(2, $usu_apep);
             $sql->bindValue(3, $usu_apem);
             $sql->bindValue(4, $usu_correo);
             $sql->bindValue(5, $usu_pass);
+<<<<<<< Updated upstream
             $sql->bindValue(6, $usu_sex);
             $sql->bindValue(7, $usu_telf);
             $sql->bindValue(8, $rol_id);
             $sql->bindValue(9, $usu_id);
+=======
+            $sql->bindValue(6, $usu_telf);
+            $sql->bindValue(7, $rol_id);
+            $sql->bindValue(8, $usu_id);
+>>>>>>> Stashed changes
             $sql->execute();
-            return $resultado=$sql->fetchAll();
+            return $resultado = $sql->fetchAll();
         }
+        
 
         public function delete_usuario($usu_id) {
             $conectar = parent::conexion();
