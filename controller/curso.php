@@ -36,12 +36,14 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar segun ID */
     case "eliminar":
-        if (isset($_POST["cur_id"])) {
-            $curso->delete_curso($_POST["cur_id"]);
+        if (isset($_POST["cur_id"]) && is_numeric($_POST["cur_id"])) {
+            $cur_id = intval($_POST["cur_id"]); // Asegúrate de que sea un entero
+            $curso->delete_curso($cur_id);
         } else {
-            echo json_encode(["error" => "cur_id no definido"]);
+            echo json_encode(["error" => "cur_id no definido o no válido"]);
         }
         break;
+    
 
     /*TODO:  Listar toda la informacion segun formato de datatable */
     case "listar":
@@ -101,11 +103,37 @@ switch ($_GET["op"]) {
         break;
 
     case "update_imagen_curso":
-        if (isset($_POST["curx_idx"]) && isset($_POST["cur_img"])) {
-            $curso->update_imagen_curso($_POST["curx_idx"], $_POST["cur_img"]);
+<<<<<<< Updated upstream
+        // Agregar depuración para ver el contenido de $_POST y $_FILES
+        error_log(print_r($_POST, true));
+        error_log(print_r($_FILES, true));
+        
+        if (isset($_POST["curx_idx"]) && isset($_FILES["cur_img"])) {
+            // Verificar si hubo errores al subir el archivo
+            if ($_FILES["cur_img"]["error"] === UPLOAD_ERR_OK) {
+                $curso->update_imagen_curso($_POST["curx_idx"], $_FILES["cur_img"]);
+            } else {
+                echo json_encode(["error" => "Error al subir el archivo"]);
+            }
         } else {
-            echo json_encode(["error" => "curx_idx o cur_img no definidos"]);
+            // Depuración adicional
+            $missingFields = [];
+            if (!isset($_POST["curx_idx"])) {
+                $missingFields[] = "curx_idx";
+            }
+            if (!isset($_FILES["cur_img"])) {
+                $missingFields[] = "cur_img";
+            }
+            echo json_encode(["error" => implode(" y ", $missingFields) . " no definidos"]);
         }
         break;
+    }
+        
+        
+=======
+        $curso->update_imagen_curso($_POST["curx_idx"],$_POST["cur_img"]);
+        break;
+        
 }
+>>>>>>> Stashed changes
 ?>

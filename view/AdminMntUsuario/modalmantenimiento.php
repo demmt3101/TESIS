@@ -43,6 +43,18 @@
                             <input class="form-control tx-uppercase" id="usu_pass" type="text" name="usu_pass" required/>
                         </div>
                     </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label">Sexo: <span class="tx-danger">*</span></label>
+                            <select class="form-control select2" style="width:100%" name="inst_sex" id="inst_sex" data-placeholder="Seleccione">
+                                <option label="Seleccione"></option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-control-label">Telefono: <span class="tx-danger">*</span></label>
@@ -60,7 +72,6 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="action" value="add" class="btn btn-outline-primary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium"><i class="fa fa-check"></i> Guardar</button>

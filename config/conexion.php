@@ -11,8 +11,6 @@
             try {
                 /*TODO: Cadena de Conexion QA*/
 				$conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=TESIS","root","");
-                /*TODO: Cadena de Conexion Produccion*/
-				//$conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=andercode_diplomas","diploma1","@ndercode");
 				return $conectar;
 			} catch (Exception $e) {
                 /*TODO: En Caso hubiera un error en la cadena de conexion */
@@ -30,8 +28,7 @@
         public static function ruta(){
             //QA
             return "http://localhost:90/TESIS/";
-            //Produccion
-            //return "http://diplomas.anderson-bastidas.com/";
+            
         }
 
     }
