@@ -151,7 +151,6 @@ switch ($_GET["op"]) {
                 $sub_array[] = $row["usu_apep"];
                 $sub_array[] = $row["usu_correo"];
                 $sub_array[] = $row["curso"];
-                $sub_array[] = $row["usu_pass"];
                 if ($row["rol_id"]==1) {
                     $sub_array[] = "Usuario";
                 }else{
