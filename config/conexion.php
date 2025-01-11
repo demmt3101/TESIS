@@ -1,35 +1,34 @@
 <?php
-    /*TODO: Inicializando la sesion del usuario */
-    session_start();
+/* Iniciar la sesión del usuario */
+session_start();
 
-    /*TODO: Iniciamos Clase Conectar */
-    class Conectar{
-        protected $dbh;
+/* Clase para manejar la conexión a la base de datos */
+class Conectar {
+    protected $dbh;
 
-        /*TODO: Funcion Protegida de la cadena de Conexion */
-        protected function Conexion(){
-            try {
-                /*TODO: Cadena de Conexion QA*/
-				$conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=TESIS","root","");
-				return $conectar;
-			} catch (Exception $e) {
-                /*TODO: En Caso hubiera un error en la cadena de conexion */
-				print "¡Error BD!: " . $e->getMessage() . "<br/>";
-				die();
-			}
+    /* Método protegido para establecer la conexión con la base de datos */
+    protected function Conexion() {
+        try {
+            /* Cadena de conexión */
+            $conectar = $this->dbh = new PDO("mysql:host=localhost;dbname=TESIS", "root", "");
+            // Configurar el modo de error de PDO para excepciones
+            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conectar;
+        } catch (Exception $e) {
+            /* En caso de error en la conexión */
+            print "¡Error BD!: " . $e->getMessage() . "<br/>";
+            die();
         }
-
-        /*TODO: Para impedir que tengamos problemas con las ñ o tildes */
-        public function set_names(){
-            return $this->dbh->query("SET NAMES 'utf8'");
-        }
-
-        /*TODO: Ruta principal del proyecto */
-        public static function ruta(){
-            //QA
-            return "http://localhost:90/TESIS/";
-            
-        }
-
     }
+
+    /* Método para establecer la codificación de caracteres a UTF-8 */
+    public function set_names() {
+        return $this->dbh->query("SET NAMES 'utf8'");
+    }
+
+    /* Método estático para obtener la ruta principal del proyecto */
+    public static function ruta() {
+        return "http://localhost:90/TESIS/";
+    }
+}
 ?>

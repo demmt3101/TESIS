@@ -65,12 +65,6 @@
                   <input class="form-control" type="text" name="usu_pass" id="usu_pass" placeholder="Ingrese Contraseña">
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="form-control-label">Telefono: <span class="tx-danger">*</span></label>
-                  <input class="form-control" type="number" name="usu_telf" id="usu_telf" placeholder="Ingrese Telefono">
-                </div>
-              </div>
             </div>
 
             <div class="form-layout-footer">

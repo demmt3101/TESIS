@@ -47,6 +47,7 @@
                     <div class="col-lg-4">
                         <label class="form-control-label">&nbsp;</label>
                         <button class="btn btn-outline-primary form-control" id="add_button" onclick="nuevo()"><i class="fa fa-plus-square mg-r-10"></i> Agregar Usuarios</button>
+                        <button id="btnDescargaMasiva" class="btn btn-success">Descarga Masiva</button>
                     </div>
                 </div>
             </div>

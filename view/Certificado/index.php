@@ -24,6 +24,7 @@
         <div class="form-layout-footer">
             <button class="btn btn-outline-info" id="btnpng"><i class="fa fa-send mg-r-10"></i> PNG</button>
             <button class="btn btn-outline-success" id="btnpdf"><i class="fa fa-send mg-r-10"></i> PDF</button>
+            <button class="btn btn-outline-warning" id="generate_zip_pdf"><i class="fa fa-archive mg-r-10"></i> Descargar ZIP (PDF)</button>
         </div>
 
       </div>

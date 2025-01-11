@@ -103,37 +103,8 @@ switch ($_GET["op"]) {
         break;
 
     case "update_imagen_curso":
-<<<<<<< Updated upstream
-        // Agregar depuración para ver el contenido de $_POST y $_FILES
-        error_log(print_r($_POST, true));
-        error_log(print_r($_FILES, true));
-        
-        if (isset($_POST["curx_idx"]) && isset($_FILES["cur_img"])) {
-            // Verificar si hubo errores al subir el archivo
-            if ($_FILES["cur_img"]["error"] === UPLOAD_ERR_OK) {
-                $curso->update_imagen_curso($_POST["curx_idx"], $_FILES["cur_img"]);
-            } else {
-                echo json_encode(["error" => "Error al subir el archivo"]);
-            }
-        } else {
-            // Depuración adicional
-            $missingFields = [];
-            if (!isset($_POST["curx_idx"])) {
-                $missingFields[] = "curx_idx";
-            }
-            if (!isset($_FILES["cur_img"])) {
-                $missingFields[] = "cur_img";
-            }
-            echo json_encode(["error" => implode(" y ", $missingFields) . " no definidos"]);
-        }
-        break;
-    }
-        
-        
-=======
         $curso->update_imagen_curso($_POST["curx_idx"],$_POST["cur_img"]);
         break;
         
 }
->>>>>>> Stashed changes
 ?>
