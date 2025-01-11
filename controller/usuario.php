@@ -123,7 +123,6 @@ switch ($_GET["op"]) {
                 $_POST["usu_apem"],
                 $_POST["usu_pass"],
                 $_POST["usu_sex"],
-                $_POST["usu_telf"]
             );
             break;
 
@@ -265,7 +264,7 @@ switch ($_GET["op"]) {
             break;
 
         case "guardar_desde_excel":
-            $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"],$_POST["usu_telf"],$_POST["rol_id"]);
+            $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_apep"],$_POST["usu_apem"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["usu_sex"], $_POST["rol_id"]);
             break;
             
         }
