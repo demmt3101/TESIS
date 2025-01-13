@@ -1,9 +1,9 @@
 <?php
 /* TODO: Llamando a cadena de Conexion */
-require_once('D:\XAMPP\htdocs\TESIS\config\conexion.php');
+require_once('C:\XAMPP\htdocs\TESIS\config\conexion.php');
 /* TODO: Llamando a la clase Usuario */
-require_once('D:\XAMPP\htdocs\TESIS\models\Usuario.php');
-require ('D:\XAMPP\htdocs\TESIS\vendor\autoload.php');
+require_once('C:\XAMPP\htdocs\TESIS\models\Usuario.php');
+require ('C:\XAMPP\htdocs\TESIS\vendor\autoload.php');
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Inicializando la clase Usuario

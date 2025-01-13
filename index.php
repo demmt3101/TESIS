@@ -77,6 +77,9 @@
     <link href="public/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link rel="stylesheet" href="public/css/bracket.css">
     <title>CERTIPUCE | Acceso</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   </head>
 
   <body>
@@ -112,6 +115,9 @@
     <script src="public/lib/jquery/jquery.js"></script>
     <script src="public/lib/popper.js/popper.js"></script>
     <script src="public/lib/bootstrap/bootstrap.js"></script>
+
+    <script src="descargaMasiva.js" type="module"></script>
+    <script src="admindetallecertificado.js" type="module"></script>
 
   </body>
 </html>
