@@ -66,9 +66,6 @@ $(document).ready(function () {
     // Obtener el valor seleccionado del combo
     const cur_id = $("#cur_id").val();
 
-    // Mostrar el valor en la consola
-    console.log("Valor seleccionado:", cur_id);
-
     var curd_ids = [];
 
     try {
@@ -79,9 +76,6 @@ $(document).ready(function () {
         data: { cur_id: cur_id }, // ID del curso que quieres consultar
         dataType: "json",
       });
-
-      // Verificar la estructura de la respuesta
-      console.log("Respuesta del servidor:", response);
 
       // Verificar si la respuesta contiene datos
       if (response && response.length > 0) {
@@ -108,6 +102,7 @@ $(document).ready(function () {
         { curd_id: curd_id }
       );
       let data = JSON.parse(response);
+      console.log(data);
 
       // Crear un canvas para generar la imagen
       let canvas = document.createElement("canvas");
@@ -182,8 +177,21 @@ $(document).ready(function () {
       doc.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
 
       // Añadir el PDF al ZIP
+      const today = new Date();
+      const formattedDate = `${String(today.getDate()).padStart(
+        2,
+        "0"
+      )}-${String(today.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${today.getFullYear()}`;
+      console.log(formattedDate);
+
       var pdfData = doc.output("blob");
-      pdfFolder.file(`Certificado_${curd_id}.pdf`, pdfData);
+      pdfFolder.file(
+        `Certificado_${data.usu_nom} ${data.usu_apep} ${data.usu_apem}_${data.cur_nom}_${formattedDate}.pdf`,
+        pdfData
+      );
     }
 
     // Generar y descargar el ZIP
