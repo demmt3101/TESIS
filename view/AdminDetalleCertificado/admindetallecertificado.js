@@ -102,7 +102,6 @@ $(document).ready(function () {
         { curd_id: curd_id }
       );
       let data = JSON.parse(response);
-      console.log(data);
 
       // Crear un canvas para generar la imagen
       let canvas = document.createElement("canvas");
