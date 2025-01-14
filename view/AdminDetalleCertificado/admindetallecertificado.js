@@ -58,122 +58,137 @@ $(document).ready(function () {
         },
       });
     });
+  });
+});
 
-    $(document).ready(function () {
-      $("#btnDescargaMasiva").click(async function () {
-        var curd_ids = [];
+$(document).ready(function () {
+  $("#btnDescargaMasiva").click(async function () {
+    // Obtener el valor seleccionado del combo
+    const cur_id = $("#cur_id").val();
 
-        // Obtener los curd_id de cada fila de la tabla
-        $("#detalle_data tbody tr").each(function () {
-          var curd_id = $(this).find("button").attr("id"); // Obtener el id del botón (curd_id)
-          if (curd_id) {
-            curd_ids.push(curd_id);
-          }
-        });
+    // Mostrar el valor en la consola
+    console.log("Valor seleccionado:", cur_id);
 
-        if (curd_ids.length === 0) {
-          // Mensaje de que no hay certificados que generar
-          alert("No hay registros para generar certificados");
-          return;
-        } else {
-          // Crear un ZIP
-          var zip = new JSZip();
-          var pdfFolder = zip.folder("certificados");
+    var curd_ids = [];
 
-          // Procesar cada ID para generar el PDF
-          for (let i = 0; i < curd_ids.length; i++) {
-            let curd_id = curd_ids[i];
-
-            // Llamar a la API para obtener los datos
-            let response = await $.post(
-              "../../controller/usuario.php?op=mostrar_curso_detalle",
-              { curd_id: curd_id }
-            );
-            let data = JSON.parse(response);
-
-            // Generar el PDF en base a los datos
-            let canvas = document.createElement("canvas");
-            let ctx = canvas.getContext("2d");
-            canvas.width = 800;
-            canvas.height = 600;
-
-            // Dibujar la imagen base
-            let image = new Image();
-            image.src = data.cur_img;
-
-            await new Promise((resolve) => {
-              image.onload = function () {
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                // Añadir texto al canvas
-                ctx.font = "40px Arial";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                let x = canvas.width / 2;
-                ctx.fillText(
-                  data.usu_nom + " " + data.usu_apep + " " + data.usu_apem,
-                  x,
-                  250
-                );
-
-                ctx.font = "30px Arial";
-                ctx.fillText(data.cur_nom, x, 320);
-
-                ctx.font = "18px Arial";
-                ctx.fillText(
-                  data.inst_nom + " " + data.inst_apep + " " + data.inst_apem,
-                  x,
-                  420
-                );
-                ctx.font = "15px Arial";
-                ctx.fillText("Instructor", x, 450);
-
-                ctx.font = "15px Arial";
-                ctx.fillText(
-                  "Fecha de Inicio : " +
-                    data.cur_fechini +
-                    " / " +
-                    "Fecha de Finalización : " +
-                    data.cur_fechfin,
-                  x,
-                  490
-                );
-
-                resolve(); // Continuar después de dibujar
-              };
-            });
-
-            // Convertir canvas a imagen
-            var imgData = canvas.toDataURL("image/png");
-            const { jsPDF } = window.jspdf;
-            let doc = new jsPDF("l", "mm", "a4"); // "l" para horizontal, "a4" para tamaño de página
-
-            // Dimensiones del PDF
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = doc.internal.pageSize.getHeight();
-
-            // Escalar la imagen al 90% del tamaño del PDF
-            const imgWidth = pdfWidth * 0.9;
-            const imgHeight = (canvas.height / canvas.width) * imgWidth; // Mantener proporción
-
-            // Calcular posición centrada
-            const xOffset = (pdfWidth - imgWidth) / 2;
-            const yOffset = (pdfHeight - imgHeight) / 2;
-
-            // Añadir imagen al PDF
-            doc.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
-
-            // Añadir el PDF al ZIP
-            var pdfData = doc.output("blob");
-            pdfFolder.file(`Certificado_${curd_id}.pdf`, pdfData);
-          }
-
-          // Generar y descargar el ZIP
-          zip.generateAsync({ type: "blob" }).then(function (content) {
-            saveAs(content, "Certificados.zip");
-          });
-        }
+    try {
+      // Realizar la consulta AJAX para obtener los curd_ids
+      let response = await $.ajax({
+        url: "../../controller/usuario.php?op=listar_cursos_detalle_usuario",
+        type: "POST",
+        data: { cur_id: cur_id }, // ID del curso que quieres consultar
+        dataType: "json",
       });
+
+      // Verificar la estructura de la respuesta
+      console.log("Respuesta del servidor:", response);
+
+      // Verificar si la respuesta contiene datos
+      if (response && response.length > 0) {
+        curd_ids = response; // Aquí ya tienes el array con los curd_ids
+      } else {
+        console.log("No hay registros para generar certificados");
+        return;
+      }
+    } catch (error) {
+      console.error("Error al obtener los curd_ids:", error);
+    }
+
+    // Crear un ZIP
+    var zip = new JSZip();
+    var pdfFolder = zip.folder("certificados");
+
+    // Procesar cada ID para generar el PDF
+    for (let i = 0; i < curd_ids.length; i++) {
+      let curd_id = curd_ids[i];
+
+      // Llamar a la API para obtener los datos
+      let response = await $.post(
+        "../../controller/usuario.php?op=mostrar_curso_detalle",
+        { curd_id: curd_id }
+      );
+      let data = JSON.parse(response);
+
+      // Crear un canvas para generar la imagen
+      let canvas = document.createElement("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.width = 800;
+      canvas.height = 600;
+
+      // Dibujar la imagen base
+      let image = new Image();
+      image.src = data.cur_img;
+
+      await new Promise((resolve) => {
+        image.onload = function () {
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+          // Añadir texto al canvas
+          ctx.font = "40px Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          let x = canvas.width / 2;
+          ctx.fillText(
+            data.usu_nom + " " + data.usu_apep + " " + data.usu_apem,
+            x,
+            250
+          );
+
+          ctx.font = "30px Arial";
+          ctx.fillText(data.cur_nom, x, 320);
+
+          ctx.font = "18px Arial";
+          ctx.fillText(
+            data.inst_nom + " " + data.inst_apep + " " + data.inst_apem,
+            x,
+            420
+          );
+          ctx.font = "15px Arial";
+          ctx.fillText("Instructor", x, 450);
+
+          ctx.font = "15px Arial";
+          ctx.fillText(
+            "Fecha de Inicio : " +
+              data.cur_fechini +
+              " / " +
+              "Fecha de Finalización : " +
+              data.cur_fechfin,
+            x,
+            490
+          );
+
+          resolve();
+        };
+      });
+
+      // Convertir canvas a imagen
+      var imgData = canvas.toDataURL("image/png");
+      const { jsPDF } = window.jspdf;
+      let doc = new jsPDF("l", "mm", "a4");
+
+      // Dimensiones del PDF
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+
+      // Escalar la imagen al 90% del tamaño del PDF
+      const imgWidth = pdfWidth * 0.9;
+      const imgHeight = (canvas.height / canvas.width) * imgWidth;
+
+      // Calcular posición centrada
+      const xOffset = (pdfWidth - imgWidth) / 2;
+      const yOffset = (pdfHeight - imgHeight) / 2;
+
+      // Añadir imagen al PDF
+      doc.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
+
+      // Añadir el PDF al ZIP
+      var pdfData = doc.output("blob");
+      pdfFolder.file(`Certificado_${curd_id}.pdf`, pdfData);
+    }
+
+    // Generar y descargar el ZIP
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, "Certificados.zip");
     });
   });
 });

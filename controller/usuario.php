@@ -192,6 +192,21 @@ switch ($_GET["op"]) {
             echo json_encode($results);
             break;
 
+        /* TODO: Listar solo los curd_id de los usuarios pertenecientes a un curso */
+        case "listar_cursos_detalle_usuario":
+            $datos = $usuario->get_cursos_usuario_x_id($_POST["cur_id"]);
+            
+            $data = Array(); 
+            
+            foreach ($datos as $row) {
+                if (isset($row["curd_id"])) {
+                    $data[] = $row["curd_id"]; 
+                }
+            }
+            echo json_encode($data); 
+            break;
+        
+
         /* TODO: Listar todos los detalles de los usuarios pertenecientes a un curso */
         case "listar_detalle_usuario":
             $datos=$usuario->get_usuario_modal($_POST["cur_id"]);
